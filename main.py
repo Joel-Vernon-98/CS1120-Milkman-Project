@@ -23,7 +23,7 @@ def calculate_minimum_jars(milk_amount: int):
 
 
 def main():
-    print(calculate_minimum_jars(0))
+    print(calculate_minimum_jars(550))
 
 
 if __name__ == "__main__":
