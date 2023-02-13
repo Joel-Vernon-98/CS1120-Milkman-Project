@@ -1,7 +1,6 @@
 JAR_SIZES = (70, 50, 20)
 from time import perf_counter_ns
 
-
 def calculate_minimum_required_jars(milk_amount: int):
     def backtrack(volume, solution=0, jars=0):
 
@@ -33,7 +32,7 @@ def calculate_minimum_required_jars(milk_amount: int):
 
 
 def main():
-    calculate_minimum_required_jars(65000)
+    calculate_minimum_required_jars(200000)
 
 
 if __name__ == "__main__":
