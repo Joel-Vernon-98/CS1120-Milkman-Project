@@ -1,42 +1,49 @@
+from time import perf_counter
+import sys
+
 JAR_SIZES = (70, 50, 20)
-from time import perf_counter_ns
 
-def calculate_minimum_required_jars(milk_amount: int):
-    def backtrack(volume, solution=0, jars=0):
 
-        if jars < min(solutions, default=-1):
-            return
+def calc_minimum_jars():
+    milk_amount = 69440
+    extended = set()
+
+    def branch_and_bound(volume, min_req_jars=0, solution=sys.maxsize):
+
+        extended.add(volume)
 
         if volume == 0:
-            solutions.add(jars)
-            return
+            return min(solution, min_req_jars)
 
-        for jar_size in JAR_SIZES:
+        for jar in JAR_SIZES:
 
-            next_jar = volume - jar_size
-            if next_jar >= 20 or next_jar == 0:
-                backtrack(volume - jar_size, solution, jars + 1)
-            else:
-                continue
+            next_volume = volume - jar
+            next_min_req_jars = min_req_jars + 1
 
-    solutions = set()
+            if next_min_req_jars >= solution:
+                return solution
+
+            if next_volume in extended:
+                return solution
+
+            if next_volume >= 20 or next_volume == 0:
+                solution = branch_and_bound(next_volume, next_min_req_jars, solution)
+
+        return solution
+
     if milk_amount % 10 != 0:
-        return print("Sorry !!! Cannot measure the required volume")
+        return "No Results Found"
 
-    backtrack(milk_amount)
-    try:
-        print(solutions, sep="\n")
-        return print(f"Minimum number of jars used: {min(solutions)}")
-    except ValueError:
-        return print("Sorry !!! Cannot measure the required volume")
+    results = branch_and_bound(milk_amount)
+    return results if results != sys.maxsize else "No Results Found"
 
 
 def main():
-    calculate_minimum_required_jars(200000)
+    print(calc_minimum_jars())
 
 
 if __name__ == "__main__":
-    start = perf_counter_ns()
+    start = perf_counter()
     main()
-    end = perf_counter_ns()
-    print(end - start)
+    end = perf_counter()
+    print(end-start)
