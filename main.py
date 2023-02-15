@@ -1,5 +1,8 @@
 import sys
+
 JAR_SIZES = (70, 50, 20)
+MAX_VOLUME = 69440
+SMALLEST_JAR = min(JAR_SIZES)
 
 
 def calc_minimum_jars():
@@ -15,7 +18,7 @@ def calc_minimum_jars():
                 return solution
             if next_volume in extended:
                 return solution
-            if next_volume >= 20 or next_volume == 0:
+            if next_volume >= SMALLEST_JAR or next_volume == 0:
                 solution = dfs(next_volume, next_min_req_jars, solution)
         return solution
 
@@ -23,7 +26,7 @@ def calc_minimum_jars():
     while not valid_input:
         try:
             milk_amount = int(input("Enter milk amount: "))
-            if milk_amount > 69440:
+            if milk_amount > MAX_VOLUME:
                 raise RecursionError
             valid_input = True
         except ValueError:
